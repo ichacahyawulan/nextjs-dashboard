@@ -1,9 +1,20 @@
+import {useEffect, useState} from 'react';
 import styles from '../styles/dashboard.module.css'
 import { AiOutlineMenu } from 'react-icons/ai'
 import { FaUserCircle } from 'react-icons/fa'
 import { IoIosArrowDown } from 'react-icons/io'
 
 export default function Header() {
+  const [windowSize, setWindowSize] = useState([]);
+
+  useEffect(()=> {
+    setWindowSize([window.innerHeight, window.innerWidth])
+
+    window.addEventListener('resize', ()=> {
+      console.log(window.innerHeight, window.innerWidth)
+      setWindowSize([window.innerHeight, window.innerWidth])
+    })
+  }, [])
 
   return (
     <div className={styles.container}>

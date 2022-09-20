@@ -3,11 +3,13 @@ import { AiOutlineDashboard, AiOutlineUsergroupAdd } from 'react-icons/ai'
 import { BiLineChart } from 'react-icons/bi'
 import { IoIosArrowForward, IoIosArrowDown } from 'react-icons/io'
 import { useEffect, useState } from 'react'
+import { useRouter } from 'next/router'
 
 export default function Sidebar() {
   const [dashboard, setDashboard] = useState(true)
   const [sales, setSales] = useState(false)
   const [management, setManagement] = useState(false)
+  const router = useRouter()
 
   // useEffect(() => {
   //   let btn = document.getElementsByClassName(`${styles.btn_menu}`);
@@ -42,18 +44,21 @@ export default function Sidebar() {
     setDashboard(true)
     setSales(false)
     setManagement(false)
+    router.push("/dashboard")
   };
 
   const handleSalesClick = () => {
     setDashboard(false)
     setSales(true)
     setManagement(false)
+    router.push("/sales")
   };
 
   const handleManagementClick = () => {
     setDashboard(false)
     setSales(false)
     setManagement(true)
+    router.push("/user_management")
   };
 
   return (

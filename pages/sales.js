@@ -9,10 +9,10 @@ export default function Dashboard() {
     <div>
       <Header />
       <Sidebar />
-      <div className="content">
+      {/* <div className="content">
         <BarGraph />
         <Doughnat />
-      </div>
+      </div> */}
 
       <style jsx>{`
         .content {

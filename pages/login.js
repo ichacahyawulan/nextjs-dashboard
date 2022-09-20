@@ -24,9 +24,7 @@ export default function Login() {
     });
   }, [])
 
-  function submitLogin(e){
-    e.preventDefault();
-
+  function submitLogin(){
     try {
       const user = {
         email: userEmail,
@@ -63,7 +61,7 @@ export default function Login() {
               <input type="password" className={styles.form_control} id="inputPassword" placeholder="Enter password" required onChange={(e) => setPass(e.target.value)} />
               <div className="invalid-feedback">This field is required.</div>
             </div>
-            <button className={`${styles.button_input}`} onClick={(e) => submitLogin(e)}>Login</button>
+            <button type="submit" className={`${styles.button_input}`} onClick={submitLogin()}>Login</button>
           </form>
         </div>
       </main>
