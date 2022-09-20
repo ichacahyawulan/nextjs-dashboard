@@ -1,13 +1,8 @@
-import styles from '../styles/sidebar.module.css'
-import { AiOutlineDashboard, AiOutlineUsergroupAdd } from 'react-icons/ai'
-import { BiLineChart } from 'react-icons/bi'
-import { IoIosArrowForward, IoIosArrowDown } from 'react-icons/io'
-import { useEffect, useState } from 'react'
-import { useRouter } from 'next/router'
-
 export default function SalesTable() {
   return (
     <div className="sales-table">
+      <h2>Sales</h2>
+      <p>22 June 2022</p>
       <table className="table">
         <thead className="table-light">
           <tr>

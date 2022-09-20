@@ -3,6 +3,7 @@ import Sidebar from "../component/sidebar"
 import BarGraph from '../component/barchart';
 import Doughnat from '../component/doughnut'
 import SalesTable from "../component/salesTable";
+import UserTable from "../component/userTable";
 
 export default function Dashboard() {
 
@@ -13,7 +14,9 @@ export default function Dashboard() {
       <div className="content">
         {/* <BarGraph />
         <Doughnat /> */}
-        <SalesTable />
+        <div className="sales-content">
+          <UserTable />
+        </div>
       </div>
 
       <style jsx>{`
@@ -29,6 +32,10 @@ export default function Dashboard() {
           justify-content: center;
           align-items: center;
           background-color: #F6F6F9;
+        }
+
+        .sales-content {
+          width: 100%;
         }
 
         @media only screen and (max-width: 1200px) {
