@@ -54,11 +54,13 @@ export default function Doughnat() {
               }
             }
           },
+          maintainAspectRatio : false
         }}
       />
 
     <style jsx>{`
       .card {
+        position: relative;
         width: 600px;
         height: 600px;
         padding: 50px;
@@ -73,8 +75,12 @@ export default function Doughnat() {
         border: 0px;
       }
 
-      @media (max-width: 600px) {
-
+      @media only screen and (max-width: 992px) {
+        .card {
+          width: 100%;
+          height: 300px;
+          padding: 10px;
+        }
       }
     `}</style>
     </div>

@@ -59,7 +59,7 @@
   padding: 0px 5px;
   gap: 22px;
 
-  width: 212px;
+  width: auto;
   height: 46px;
 
   flex: none;
@@ -101,4 +101,10 @@
   flex: none;
   order: 1;
   flex-grow: 0;
+}
+
+@media only screen and (max-width: 768px) {
+  .account_detail {
+    display: none;
+  }
 }
