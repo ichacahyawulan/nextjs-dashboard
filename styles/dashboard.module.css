@@ -1,0 +1,104 @@
+.container {
+  padding: 0;
+}
+
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px 38px;
+  gap: 22px;
+
+  position: absolute;
+  height: 80px;
+  width: 100%;
+  top: 0px;
+
+  background: #F6F6F9;
+}
+
+.burger_logo {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0px;
+  gap: 20px;
+
+  width: 129px;
+  height: 33px;
+
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+}
+
+.logo {
+  width: 78px;
+  height: 33px;
+  margin: 0px;
+
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 27px;
+  line-height: 33px;
+
+  color: #03050B;
+
+  flex: none;
+  order: 1;
+  flex-grow: 0;
+}
+
+.account {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 0px 5px;
+  gap: 22px;
+
+  width: 212px;
+  height: 46px;
+
+  flex: none;
+  order: 1;
+  flex-grow: 0;
+}
+
+.user_name {
+  width: 89px;
+  height: 21px;
+  margin: 0px;
+
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 17px;
+  line-height: 21px;
+
+  color: #03050B;
+
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+}
+
+.user_role {
+  width: 90px;
+  height: 17px;
+  margin: 0px;
+
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+
+  color: rgba(52, 52, 52, 0.7);
+
+  flex: none;
+  order: 1;
+  flex-grow: 0;
+}
