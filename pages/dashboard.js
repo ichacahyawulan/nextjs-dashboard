@@ -4,19 +4,35 @@ import BarGraph from '../component/barchart';
 import Doughnat from '../component/doughnut'
 import SalesTable from "../component/salesTable";
 import UserTable from "../component/userTable";
+import { useSelector } from "react-redux";
 
 export default function Dashboard() {
+  const selectedMenu = useSelector((state) => state.selectedMenu.value)
 
   return (
     <div>
       <Header />
       <Sidebar />
+      
       <div className="content">
-        {/* <BarGraph />
-        <Doughnat /> */}
-        <div className="sales-content">
-          <UserTable />
-        </div>
+        {selectedMenu === "dashboard" ? 
+          <div className="dashboard-content">
+            <BarGraph />
+            <Doughnat />
+          </div>
+        :
+          <div>
+            {selectedMenu === "sales" ? 
+              <div className="sales-content">
+                <SalesTable />
+              </div>
+              :
+              <div className="user-content">
+                <UserTable />
+              </div>
+            }
+          </div>
+        }
       </div>
 
       <style jsx>{`
@@ -25,17 +41,18 @@ export default function Dashboard() {
           left: 280px;
           top: 80px;
           padding: 20px 50px;
-          gap: 30px;
           width: calc(100% - 280px);
-          display: flex;
-          flex-direction: row;
-          justify-content: center;
-          align-items: center;
           background-color: #F6F6F9;
         }
 
-        .sales-content {
+        .sales-content, .dashboard-content, .user-content {
           width: 100%;
+          position: relative;
+          display: flex;
+          flex-direction: row;
+          gap: 30px;
+          justify-content: center;
+          align-items: center;
         }
 
         @media only screen and (max-width: 1200px) {

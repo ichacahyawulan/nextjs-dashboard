@@ -1,7 +1,19 @@
 import { BsSearch, BsPlusLg } from 'react-icons/bs'
 import { AiOutlineEdit, AiOutlineDelete } from 'react-icons/ai'
+import { useDispatch, useSelector } from 'react-redux'
+import { show } from "../redux/deleteModalSlice"
+import { showCreate } from "../redux/createModalSlice"
+import { showEdit } from "../redux/editModalSlice"
+import DeleteModal from "./deleteModal";
+import CreateUser from './createUserModal'
+import EditUser from './editModal'
 
 export default function UserTable() {
+  const dispatch = useDispatch()
+  const deleteUser = useSelector((state) => state.deleteUser.value)
+  const createUser = useSelector((state) => state.createUser.value)
+  const editUser = useSelector((state) => state.editUser.value)
+
   return (
     <div className="user-table">
       <div className="user-header">
@@ -11,14 +23,14 @@ export default function UserTable() {
         </div>
         <div className="user-control">
           <div className="input-group">
-            <input className="form-control border-end-0 border" type="search" value="search" id="example-search-input" />
+            <input className="form-control border-end-0 border" type="search" id="example-search-input" />
             <span className="input-group-append">
               <button className="btn btn-outline-secondary bg-white border-start-0 border-bottom-0 border ms-n5" type="button">
                 <BsSearch />
               </button>
             </span>
           </div>
-          <button className="create-button" type="button">
+          <button className="create-button" type="button" onClick={() => dispatch(showCreate())}>
             <BsPlusLg />
             Create User
           </button>
@@ -41,10 +53,10 @@ export default function UserTable() {
             <td className="d-none d-md-table-cell">Marketing</td>
             <td className="d-none d-md-table-cell"><span className="status">ACTIVE</span></td>
             <td className="action-button">
-              <button className="btn btn-dark" type="button">
+              <button className="btn btn-dark" type="button" onClick={() => dispatch(showEdit())}>
                 <AiOutlineEdit size={25}/>
               </button>
-              <button className="btn btn-danger" type="button">
+              <button className="btn btn-danger" type="button" onClick={() => dispatch(show())}>
                 <AiOutlineDelete size={25}/>
               </button>
             </td>
@@ -55,10 +67,10 @@ export default function UserTable() {
             <td className="d-none d-md-table-cell">Information Technology</td>
             <td className="d-none d-lg-table-cell"><span className="status">ACTIVE</span></td>
             <td className="action-button">
-              <button className="btn btn-dark" type="button">
+              <button className="btn btn-dark" type="button" onClick={() => dispatch(showEdit())}>
                 <AiOutlineEdit size={25}/>
               </button>
-              <button className="btn btn-danger" type="button">
+              <button className="btn btn-danger" type="button" onClick={() => dispatch(show())}>
                 <AiOutlineDelete size={25}/>
               </button>
             </td>
@@ -69,10 +81,10 @@ export default function UserTable() {
             <td className="d-none d-md-table-cell">Marketing</td>
             <td className="d-none d-md-table-cell"><span className="status">ACTIVE</span></td>
             <td className="action-button">
-              <button className="btn btn-dark" type="button">
+              <button className="btn btn-dark" type="button" onClick={() => dispatch(showEdit())}>
                 <AiOutlineEdit size={25}/>
               </button>
-              <button className="btn btn-danger" type="button">
+              <button className="btn btn-danger" type="button" onClick={() => dispatch(show())}>
                 <AiOutlineDelete size={25}/>
               </button>
             </td>
@@ -83,10 +95,10 @@ export default function UserTable() {
             <td className="d-none d-md-table-cell">Marketing</td>
             <td className="d-none d-md-table-cell"><span className="status">ACTIVE</span></td>
             <td className="action-button">
-              <button className="btn btn-dark" type="button">
+              <button className="btn btn-dark" type="button" onClick={() => dispatch(showEdit())}>
                 <AiOutlineEdit size={25}/>
               </button>
-              <button className="btn btn-danger" type="button">
+              <button className="btn btn-danger" type="button" onClick={() => dispatch(show())}>
                 <AiOutlineDelete size={25}/>
               </button>
             </td>
@@ -97,10 +109,10 @@ export default function UserTable() {
             <td className="d-none d-md-table-cell">Information Technology</td>
             <td className="d-none d-md-table-cell"><span className="status">ACTIVE</span></td>
             <td className="action-button">
-              <button className="btn btn-dark" type="button">
+              <button className="btn btn-dark" type="button" onClick={() => dispatch(showEdit())}>
                 <AiOutlineEdit size={25}/>
               </button>
-              <button className="btn btn-danger" type="button">
+              <button className="btn btn-danger" type="button" onClick={() => dispatch(show())}>
                 <AiOutlineDelete size={25}/>
               </button>
             </td>
@@ -108,9 +120,27 @@ export default function UserTable() {
         </tbody>
       </table>
 
-      <div class="clearfix">
-        <div class="hint-text">Ditampilkan 1 ke 5 dari 47</div>
+      <div className="clearfix">
+        <div className="hint-text">Ditampilkan 1 ke 5 dari 47</div>
       </div>
+
+      {deleteUser ? 
+        <DeleteModal />
+      :
+        null
+      }
+
+      {createUser ? 
+        <CreateUser />
+        :
+        null
+      }
+
+      {editUser ? 
+        <EditUser />
+        :
+        null
+      }
 
       <style jsx>{`
         .user-header {

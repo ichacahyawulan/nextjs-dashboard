@@ -3,13 +3,12 @@ import { AiOutlineDashboard, AiOutlineUsergroupAdd } from 'react-icons/ai'
 import { BiLineChart } from 'react-icons/bi'
 import { IoIosArrowForward, IoIosArrowDown } from 'react-icons/io'
 import { useEffect, useState } from 'react'
-import { useRouter } from 'next/router'
+import { useDispatch, useSelector } from 'react-redux'
+import { setMenu } from '../redux/selectedMenu'
 
 export default function Sidebar() {
-  const [dashboard, setDashboard] = useState(true)
-  const [sales, setSales] = useState(false)
-  const [management, setManagement] = useState(false)
-  const router = useRouter()
+  const dispath = useDispatch()
+  const selectedMenu = useSelector((state) => state.selectedMenu.value)
 
   // useEffect(() => {
   //   let btn = document.getElementsByClassName(`${styles.btn_menu}`);
@@ -26,39 +25,30 @@ export default function Sidebar() {
   // })
 
   const getDashboardStyle = () => {
-    if (dashboard) return styles.active_menu;
+    if (selectedMenu === "dashboard") return styles.active_menu;
     else return styles.btn_menu;
   };
 
   const getSalesStyle = () => {
-    if (sales) return styles.active_menu;
+    if (selectedMenu === "sales") return styles.active_menu;
     else return styles.btn_menu;
   };
 
   const getManagementStyle = () => {
-    if (management) return styles.active_menu;
+    if (selectedMenu === "user_management") return styles.active_menu;
     else return styles.btn_menu;
   };
 
   const handleDashboardClick = () => {
-    setDashboard(true)
-    setSales(false)
-    setManagement(false)
-    router.push("/dashboard")
+    dispath(setMenu("dashboard"))
   };
 
   const handleSalesClick = () => {
-    setDashboard(false)
-    setSales(true)
-    setManagement(false)
-    router.push("/sales")
+    dispath(setMenu("sales"))
   };
 
   const handleManagementClick = () => {
-    setDashboard(false)
-    setSales(false)
-    setManagement(true)
-    router.push("/user_management")
+    dispath(setMenu("user_management"))
   };
 
   return (
@@ -76,13 +66,13 @@ export default function Sidebar() {
       <button className={getManagementStyle()} onClick={handleManagementClick}>
         <AiOutlineUsergroupAdd size={25}></AiOutlineUsergroupAdd>
         User Management
-        {management ? 
+        {selectedMenu === "user_management" ? 
           <IoIosArrowDown size={25}></IoIosArrowDown>
         :
           <IoIosArrowForward size={25}></IoIosArrowForward>
         }
       </button>
-      {management ? 
+      {selectedMenu === "user_management" ? 
         <button className={styles.active_menu}>
           User
         </button>
