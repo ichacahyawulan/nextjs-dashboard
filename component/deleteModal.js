@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux"
 import { hide } from "../redux/deleteModalSlice"
+import { update } from "../redux/updateTable";
 
 import UserService from "../services/UserService"
 
@@ -15,7 +16,8 @@ export default function DeleteModal(props) {
     try {
       UserService.deleteUser(props.userId)
         .then(() => {
-          dispatch(hide())           
+          dispatch(hide()) // hide modal for delete user   
+          dispatch(update()) // re-render table after delete user         
         })
         .catch(() => {});
     } catch (error) {

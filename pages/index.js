@@ -81,6 +81,9 @@ export default function Dashboard() {
             width: 100%;
             left: 0px;
           }
+          .sidebar {
+            display: none;
+          }
         }
 
         @media only screen and (max-width: 992px) {
@@ -90,9 +93,6 @@ export default function Dashboard() {
           }
           .sales-content, .dashboard-content, .user-content {
             flex-direction: column;
-          }
-          .sidebar {
-            display: none;
           }
         }
 

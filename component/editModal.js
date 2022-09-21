@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux"
 import { hideEdit } from "../redux/editModalSlice"
+import { update } from "../redux/updateTable";
 
 import UserService from "../services/UserService"
 
@@ -29,7 +30,8 @@ export default function EditUser(props) {
 
       UserService.editUser(props.userId, user)
         .then(() => {
-          dispatch(hideEdit())          
+          dispatch(hideEdit()) // hide modal for edit user         
+          dispatch(update()) // re-render table after update user   
         })
         .catch(() => {});
     } catch (error) {

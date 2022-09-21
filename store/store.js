@@ -3,6 +3,7 @@ import selectedMenu from '../redux/selectedMenu'
 import deleteUser from '../redux/deleteModalSlice'
 import createUser from '../redux/createModalSlice'
 import editUser from '../redux/editModalSlice'
+import updateTable from '../redux/updateTable'
 
 
 export default configureStore({
@@ -10,6 +11,7 @@ export default configureStore({
         selectedMenu: selectedMenu,
         deleteUser:  deleteUser,
         createUser: createUser,
-        editUser: editUser
+        editUser: editUser,
+        updateTable: updateTable
     },
 })

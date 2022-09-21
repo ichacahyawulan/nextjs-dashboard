@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { show } from "../redux/deleteModalSlice"
 import { showCreate } from "../redux/createModalSlice"
 import { showEdit } from "../redux/editModalSlice"
+import { notUpdate } from '../redux/updateTable'
 import DeleteModal from "./deleteModal";
 import CreateUser from './createUserModal'
 import EditUser from './editModal'
@@ -16,33 +17,34 @@ export default function UserTable() {
   const deleteUser = useSelector((state) => state.deleteUser.value)
   const createUser = useSelector((state) => state.createUser.value)
   const editUser = useSelector((state) => state.editUser.value)
+  const updateTable = useSelector((state) => state.updateTable.value)
   const [dataUser, setDataUser] = useState([])
   const [userId, setUserId] = useState("")
   const [search, setSearch] = useState("")
 
-  useEffect(() => {
-    function getUserData(){
-      try {
-        const data_page = {
-          page: 1,
-          page_size: 10
-        }
-        UserService.getAllUser(data_page).then((res) => {
-          switch (res.status) {
-            case 200:
-              setDataUser(res.data.results)
-              break;
-            default:
-              break
-          } 
-        })
-      } catch (error) {
-        console.log(error.message)
+  function getUserData(){
+    try {
+      const data_page = {
+        page: 1,
+        page_size: 5
       }
+      UserService.getAllUser(data_page).then((res) => {
+        switch (res.status) {
+          case 200:
+            setDataUser(res.data.results)
+            break;
+          default:
+            break
+        } 
+      })
+    } catch (error) {
+      console.log(error.message)
     }
+  }
 
+  useEffect(() => {
     getUserData()
-  })
+  }, [])
 
   useEffect(() => {
     try {
@@ -59,6 +61,14 @@ export default function UserTable() {
       console.log(error.message)
     }
   }, [search])
+
+  useEffect(() => {
+    console.log(updateTable)
+    if (updateTable) {
+      getUserData()
+      dispatch(notUpdate())
+    }
+  }, [updateTable])
 
 
   function showDeleteModal(id) {
@@ -119,11 +129,6 @@ export default function UserTable() {
         <div className="user-control">
           <div className="input-group">
             <input className="form-control border-end-0 border" type="search" id="example-search-input" onChange={(e) => setSearch(e.target.value)}/>
-            <span className="input-group-append">
-              <button className="btn btn-outline-secondary bg-white border-start-0 border-bottom-0 border ms-n5" type="button">
-                <BsSearch />
-              </button>
-            </span>
           </div>
           <button className="create-button" type="button" onClick={() => dispatch(showCreate())}>
             <BsPlusLg />

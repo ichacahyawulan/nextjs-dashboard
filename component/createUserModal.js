@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux"
 import { hideCreate } from "../redux/createModalSlice"
+import { update } from "../redux/updateTable";
 
 import UserService from "../services/UserService"
 
@@ -32,6 +33,7 @@ export default function CreateUser() {
       UserService.createUser(user)
         .then(() => {
             dispatch(hideCreate()) // hide modal for create user       
+            dispatch(update())  // re-render table after add new user
         })
         .catch(() => {});
     } catch (error) {
