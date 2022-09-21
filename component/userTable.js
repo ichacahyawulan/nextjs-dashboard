@@ -26,15 +26,31 @@ export default function UserTableList() {
   const [search, setSearch] = useState("")
   const [currentPage, setCurrentPage] = useState(1);
 
+  // get data by table page
   const currentTableData = useMemo(() => {
     const firstPageIndex = (currentPage - 1) * PageSize;
     const lastPageIndex = firstPageIndex + PageSize;
     return dataUser.slice(firstPageIndex, lastPageIndex);
   }, [currentPage, dataUser]);
 
+  // get data length
   const dataLength = useMemo(() => {
     return dataUser.length;
   }, [dataUser]);
+
+  // get first and last data index in current page
+  const dataIndex = useMemo(() => {
+    const firstDataIndex = (currentPage * PageSize) - (PageSize - 1)
+    let lastDataIndex = (currentPage * PageSize)
+    if (lastDataIndex > dataUser.length) {
+      lastDataIndex = dataUser.length
+    }
+    const dataIdx = {
+      first: firstDataIndex,
+      last: lastDataIndex
+    }
+    return dataIdx;
+  }, [currentPage, dataUser]);
 
   function getAllUserData() {
     try {
@@ -56,10 +72,8 @@ export default function UserTableList() {
     getAllUserData()
   }, [])
 
-  useEffect(() => {
-    console.log(currentPage, "halo page")
-  }, [currentPage])
 
+  // get data by search
   useEffect(() => {
     try {
       UserService.getUserSearch(search).then((res) => {
@@ -76,6 +90,7 @@ export default function UserTableList() {
     }
   }, [search])
 
+  // re-render table data if data updated
   useEffect(() => {
     if (updateTable) {
       getAllUserData()
@@ -148,7 +163,7 @@ export default function UserTableList() {
       </table>
 
       <div className="page-show">
-        <div className="hint-text">Ditampilkan 1 ke 5 dari {dataLength}</div>
+        <div className="hint-text">Ditampilkan {dataIndex.first} ke {dataIndex.last} dari {dataLength}</div>
         <Pagination
           className="pagination-bar"
           currentPage={currentPage}
@@ -158,7 +173,7 @@ export default function UserTableList() {
         />
       </div>
       
-
+      {/* modal for delete, create, and edit user */}
       {deleteUser ? 
         <DeleteModal userId={userId}/>
       :
