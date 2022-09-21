@@ -120,8 +120,25 @@ export default function UserTable() {
         </tbody>
       </table>
 
-      <div className="clearfix">
+      <div className="page-show">
         <div className="hint-text">Ditampilkan 1 ke 5 dari 47</div>
+        <nav aria-label="Page navigation example">
+          <ul className="pagination">
+            <li className="page-item">
+              <a className="page-link" href="#" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+              </a>
+            </li>
+            <li className="page-item"><a className="page-link" href="#">1</a></li>
+            <li className="page-item"><a className="page-link" href="#">2</a></li>
+            <li className="page-item"><a className="page-link" href="#">3</a></li>
+            <li className="page-item">
+              <a className="page-link" href="#" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
       </div>
 
       {deleteUser ? 
@@ -208,6 +225,15 @@ export default function UserTable() {
           display: flex;
           flex-direction: row;
           gap: 10px;
+        }
+        .page-show {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          align-items: center;
+        }
+        ul {
+          margin: 0px;
         }
 
         @media only screen and (max-width: 600px) {
