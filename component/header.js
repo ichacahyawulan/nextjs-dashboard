@@ -16,15 +16,6 @@ export default function Header() {
             localStorage.removeItem("user");
             navigate('/login');
             break;
-          case 400:
-            console.log(res)
-            break;
-          case 421:
-            console.log(res)
-            break;
-          case 500:
-            alert('Something went wrong.')
-            break;
           default:
             break
         }                
@@ -52,7 +43,7 @@ export default function Header() {
           </div>
           <button type="button" className="btn btn-light" data-bs-toggle="dropdown" aria-expanded="false"><IoIosArrowDown size={30} color="#03050B"></IoIosArrowDown></button>
           <div className="dropdown-menu">
-            <button type="button" className="btn btn-light btn-logout" onClick={submitLogout()}>Logout</button>
+            <button type="button" className="btn btn-light btn-logout" onClick={submitLogout}>Logout</button>
           </div>
         </div>
       </header>

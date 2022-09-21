@@ -8,7 +8,6 @@ export default function Login() {
 
   useEffect(() => {
     let forms = document.getElementsByClassName('needs-validation');
-    console.log(forms)
     
     // Loop over them and prevent submission
     Array.prototype.filter.call(forms, function(form) {
@@ -30,30 +29,21 @@ export default function Login() {
       }
 
       LoginService.login(user).then((res) => {
-      switch (res.status) {
-        case 200:
-          localStorage.removeItem("user");
-          localStorage.setItem("user", JSON.stringify(res.data));
-          navigate('/v1');
-          break;
-        case 400:
-          alert('Bad request.')
-          break;
-        case 422:
-          alert('Validation error.')
-          break;
-        case 500:
-          alert('Something went wrong.')
-          break;
-        default:
-          break
-      }                
-    })
+        switch (res.status) {
+          case 200:
+            localStorage.removeItem("user");
+            localStorage.setItem("user", JSON.stringify(res.data));
+            navigate('/v1');
+            break;
+          default:
+            break
+        }                
+      })
 
     } catch (error) {
       console.log(error.message)
     }
-}
+  }
 
   return (
     <div className={styles.container}>
@@ -80,7 +70,7 @@ export default function Login() {
               <input type="password" className={styles.form_control} id="inputPassword" placeholder="Enter password" required onChange={(e) => setPass(e.target.value)} />
               <div className="invalid-feedback">This field is required.</div>
             </div>
-            <button type="submit" className={`${styles.button_input}`} onClick={submitLogin()}>Login</button>
+            <button type="submit" className={`${styles.button_input}`} onClick={submitLogin}>Login</button>
           </form>
         </div>
       </main>
