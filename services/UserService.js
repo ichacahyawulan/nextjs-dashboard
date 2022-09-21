@@ -3,7 +3,7 @@ import auth from "./authService";
 
 class UserService {
     getAllUser(){
-        return http.get(`/user/`, {headers: auth()});
+        return http.get(`/user/?page_size=1000`, {headers: auth()});
     }
 
     getUserPage(data){
@@ -11,7 +11,7 @@ class UserService {
     }
 
     getUserSearch(data){
-        return http.get(`/user/?search=${data}`, {headers: auth()});
+        return http.get(`/user/?search=${data}&page_size=1000`, {headers: auth()});
     }
 
     createUser(data){

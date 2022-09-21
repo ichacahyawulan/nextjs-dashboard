@@ -92,6 +92,7 @@ export default function UserTableList() {
       UserService.getAllUser().then((res) => {
         switch (res.status) {
           case 200:
+            console.log(res.data.results)
             setDataUser(res.data.results)
             break;
           default:
