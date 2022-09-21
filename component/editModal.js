@@ -28,7 +28,7 @@ export default function EditUser(props) {
         departement: departement
       }
 
-      UserService.editUser(props.userId, user)
+      UserService.editUser(props.user.id, user)
         .then(() => {
           dispatch(hideEdit()) // hide modal for edit user         
           dispatch(update()) // re-render table after update user   
@@ -44,11 +44,11 @@ export default function EditUser(props) {
       <div className="form">
         <div className="form-field">
           <label className="form-label" htmlFor="inputEmail">Email</label>
-          <input className="form-control" id="inputEmail" placeholder="Enter email" required onChange={(e) => setEmail(e.target.value)} />
+          <input className="form-control" id="inputEmail" placeholder="Enter email" defaultValue={props.user.email} required onChange={(e) => setEmail(e.target.value)} />
         </div>
         <div className="form-field">
           <label className="form-label" htmlFor="inputEmployee">Employee</label>
-          <input className="form-control" id="inputEmployee" placeholder="Enter employee" required onChange={(e) => setEmployee(e.target.value)} />
+          <input className="form-control" id="inputEmployee" placeholder="Enter employee" defaultValue={props.user.employee} required onChange={(e) => setEmployee(e.target.value)} />
         </div>
         <div className="form-field">
           <label className="form-label" htmlFor="inputPassword">Password</label>
@@ -59,14 +59,14 @@ export default function EditUser(props) {
           <input className="form-control" id="inputPasswordConf" placeholder="Enter password configuration" type="password" required onChange={(e) => setPassConf(e.target.value)} />
         </div>
         <div className="form-check">
-          <input className="form-check-input" type="checkbox" id="inputPasswordConf" onChange={(e) => setIsActive(e.target.checked)}/>
-          <label className="form-check-label" htmlFor="inputPasswordConf">
+          <input className="form-check-input" type="checkbox" id="inputActive" onChange={(e) => setIsActive(e.target.checked)}/>
+          <label className="form-check-label" htmlFor="inputActive">
             Active
           </label>
         </div>
         <div className="form-field">
-          <label className="form-label" htmlFor="inputDepartement">Department</label>
-          <input className="form-control" id="inputDepartement" placeholder="Enter email" required onChange={(e) => setDepartement(e.target.value)} />
+          <label className="form-label" htmlFor="inputDepartement">Departement</label>
+          <input className="form-control" id="inputDepartement" placeholder="Enter departement" defaultValue={props.user.departement} required onChange={(e) => setDepartement(e.target.value)} />
         </div>
       </div>
 

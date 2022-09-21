@@ -24,6 +24,7 @@ export default function UserTableList() {
   const [dataUser, setDataUser] = useState([])
   const [newDataUser, setNewDataUser] = useState([])
   const [userId, setUserId] = useState("")
+  const [selectedUser, setSelectedUser] = useState()
   const [search, setSearch] = useState("")
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -138,9 +139,9 @@ export default function UserTableList() {
     setUserId(id)
   }
 
-  function showEditModal(id) {
+  function showEditModal(item) {
     dispatch(showEdit())
-    setUserId(id)
+    setSelectedUser(item)
   }
 
   return (
@@ -184,7 +185,7 @@ export default function UserTableList() {
                 }
               </td>
               <td className="action-button">
-                <button className="btn btn-dark" type="button" onClick={() => showEditModal(item.id)}>
+                <button className="btn btn-dark" type="button" onClick={() => showEditModal(item)}>
                   <AiOutlineEdit size={25}/>
                 </button>
                 <button className="btn btn-danger" type="button" onClick={() => showDeleteModal(item.id)}>
@@ -221,7 +222,7 @@ export default function UserTableList() {
       }
 
       {editUser ? 
-        <EditUser userId={userId}/>
+        <EditUser user={selectedUser}/>
         :
         null
       }
