@@ -1,5 +1,5 @@
 import styles from '../styles/login.module.css'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import LoginService from '../services/LoginService';
 import { useRouter } from "next/router";
 
@@ -61,18 +61,18 @@ export default function Login() {
             </p>
           </div>
           
-          <form action="/examples/actions/confirmation.php" className={`${styles.input} needs-validation`} method="post" noValidate>
-            <div className={`${styles.form_input}`}>
+          <form className={`${styles.input} needs-validation`} method="post" noValidate>
+            <div className={styles.form_input}>
               <label className={styles.form_label} htmlFor="inputEmail">Email</label>
               <input className={styles.form_control} id="inputEmail" placeholder="Enter email" required onChange={(e) => setEmail(e.target.value)} />
               <div className="invalid-feedback">This field is required.</div>
             </div>
-            <div className={`${styles.form_input}`}>
+            <div className={styles.form_input}>
               <label className={styles.form_label} htmlFor="inputPassword">Password</label>
               <input type="password" className={styles.form_control} id="inputPassword" placeholder="Enter password" required onChange={(e) => setPass(e.target.value)} />
               <div className="invalid-feedback">This field is required.</div>
             </div>
-            <button type="button" className={`${styles.button_input}`} onClick={(e) => submitLogin(e)}>Login</button>
+            <button type="button" className={styles.button_input} onClick={(e) => submitLogin(e)}>Login</button>
           </form>
         </div>
       </main>

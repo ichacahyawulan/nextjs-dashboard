@@ -12,7 +12,7 @@ export default function EditUser(props) {
   const [employee, setEmployee] = useState("");
   const [pass, setPass] = useState("");
   const [passConf, setPassConf] = useState("");
-  const [isActive, setIsActive] = useState(true);
+  const [isActive, setIsActive] = useState(false);
   const [departement, setDepartement] = useState("");
 
   function editUser(e){
@@ -39,14 +39,6 @@ export default function EditUser(props) {
     }
   }
 
-  function setActive(value) {
-    if (value === "on") {
-      setIsActive(true)
-    } else {
-      setIsActive(false)
-    }
-  }
-
   return (
     <div className="create-modal centered">
       <div className="form">
@@ -67,7 +59,7 @@ export default function EditUser(props) {
           <input className="form-control" id="inputPasswordConf" placeholder="Enter password configuration" type="password" required onChange={(e) => setPassConf(e.target.value)} />
         </div>
         <div className="form-check">
-          <input className="form-check-input" type="checkbox" id="inputPasswordConf" onChange={(e) => setActive(e.target.value)}/>
+          <input className="form-check-input" type="checkbox" id="inputPasswordConf" onChange={(e) => setIsActive(e.target.checked)}/>
           <label className="form-check-label" htmlFor="inputPasswordConf">
             Active
           </label>

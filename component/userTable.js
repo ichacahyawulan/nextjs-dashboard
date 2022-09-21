@@ -1,4 +1,4 @@
-import { BsSearch, BsPlusLg } from 'react-icons/bs'
+import { BsPlusLg } from 'react-icons/bs'
 import { AiOutlineEdit, AiOutlineDelete } from 'react-icons/ai'
 import { useDispatch, useSelector } from 'react-redux'
 import { show } from "../redux/deleteModalSlice"
@@ -8,11 +8,14 @@ import { notUpdate } from '../redux/updateTable'
 import DeleteModal from "./deleteModal";
 import CreateUser from './createUserModal'
 import EditUser from './editModal'
+import Pagination from './pagination';
 
 import UserService from '../services/UserService'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useMemo } from 'react'
 
-export default function UserTable() {
+let PageSize = 5;
+
+export default function UserTableList() {
   const dispatch = useDispatch()
   const deleteUser = useSelector((state) => state.deleteUser.value)
   const createUser = useSelector((state) => state.createUser.value)
@@ -21,14 +24,21 @@ export default function UserTable() {
   const [dataUser, setDataUser] = useState([])
   const [userId, setUserId] = useState("")
   const [search, setSearch] = useState("")
+  const [currentPage, setCurrentPage] = useState(1);
 
-  function getUserData(){
+  const currentTableData = useMemo(() => {
+    const firstPageIndex = (currentPage - 1) * PageSize;
+    const lastPageIndex = firstPageIndex + PageSize;
+    return dataUser.slice(firstPageIndex, lastPageIndex);
+  }, [currentPage, dataUser]);
+
+  const dataLength = useMemo(() => {
+    return dataUser.length;
+  }, [dataUser]);
+
+  function getAllUserData() {
     try {
-      const data_page = {
-        page: 1,
-        page_size: 5
-      }
-      UserService.getAllUser(data_page).then((res) => {
+      UserService.getAllUser().then((res) => {
         switch (res.status) {
           case 200:
             setDataUser(res.data.results)
@@ -43,8 +53,12 @@ export default function UserTable() {
   }
 
   useEffect(() => {
-    getUserData()
+    getAllUserData()
   }, [])
+
+  useEffect(() => {
+    console.log(currentPage, "halo page")
+  }, [currentPage])
 
   useEffect(() => {
     try {
@@ -63,9 +77,8 @@ export default function UserTable() {
   }, [search])
 
   useEffect(() => {
-    console.log(updateTable)
     if (updateTable) {
-      getUserData()
+      getAllUserData()
       dispatch(notUpdate())
     }
   }, [updateTable])
@@ -80,44 +93,6 @@ export default function UserTable() {
     dispatch(showEdit())
     setUserId(id)
   }
-
-  const data = [
-    {
-      "id": "d4ac1ad5-31cc-4563-abfe-f44e9e69effd",
-      "employee": "admin",
-      "email": "michelle@gmail.com",
-      "is_active": true,
-      "departement": "Marketing"
-    },
-    {
-      "id": "1",
-      "employee": "Jona Michelle 1",
-      "email": "michelle@gmail.com",
-      "is_active": false,
-      "departement": "Marketing"
-    },
-    {
-      "id": "2",
-      "employee": "Jona Michelle 2",
-      "email": "michelle@gmail.com",
-      "is_active": true,
-      "departement": "Marketing"
-    },
-    {
-      "id": "3",
-      "employee": "Jona Michelle 3",
-      "email": "michelle@gmail.com",
-      "is_active": true,
-      "departement": "Marketing"
-    },
-    {
-      "id": "4",
-      "employee": "Jona Michelle 4",
-      "email": "michelle@gmail.com",
-      "is_active": true,
-      "departement": "Marketing"
-    }
-  ]
 
   return (
     <div className="user-table">
@@ -147,7 +122,7 @@ export default function UserTable() {
           </tr>
         </thead>
         <tbody>
-          {dataUser.map((item, index) => (
+          {currentTableData.map((item, index) => (
             <tr key={index}>
               <td>{item.employee}</td>
               <td className="d-none d-md-table-cell">{item.email}</td>
@@ -173,25 +148,16 @@ export default function UserTable() {
       </table>
 
       <div className="page-show">
-        <div className="hint-text">Ditampilkan 1 ke 5 dari 47</div>
-        <nav aria-label="Page navigation example">
-          <ul className="pagination">
-            <li className="page-item">
-              <a className="page-link" href="#" aria-label="Previous">
-                <span aria-hidden="true">&laquo;</span>
-              </a>
-            </li>
-            <li className="page-item"><a className="page-link" href="#">1</a></li>
-            <li className="page-item"><a className="page-link" href="#">2</a></li>
-            <li className="page-item"><a className="page-link" href="#">3</a></li>
-            <li className="page-item">
-              <a className="page-link" href="#" aria-label="Next">
-                <span aria-hidden="true">&raquo;</span>
-              </a>
-            </li>
-          </ul>
-        </nav>
+        <div className="hint-text">Ditampilkan 1 ke 5 dari {dataLength}</div>
+        <Pagination
+          className="pagination-bar"
+          currentPage={currentPage}
+          totalCount={dataLength}
+          pageSize={PageSize}
+          onPageChange={page => setCurrentPage(page)}
+        />
       </div>
+      
 
       {deleteUser ? 
         <DeleteModal userId={userId}/>
@@ -290,11 +256,16 @@ export default function UserTable() {
           justify-content: space-between;
           align-items: center;
         }
-        ul {
-          margin: 0px;
+        .hint-text {
+          width: 100%;
         }
+        .pagination-bar {
+          width: 100%;
+          display: flex;
+          justify-content: end;
+        }  
 
-        @media only screen and (max-width: 600px) {
+        @media only screen and (max-width: 768px) {
           .user-header {
             display: flex;
             flex-direction: column;
@@ -303,6 +274,16 @@ export default function UserTable() {
             position: relative;
             width: 100%;
             height: auto;
+          }
+          .page-show {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+          }
+          .hint-text, .pagination-bar {
+            width: 100%;
+            display: flex;
+            justify-content: center;
           }
         }
       `}</style>

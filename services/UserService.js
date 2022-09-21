@@ -2,7 +2,11 @@ import http from "./http-common";
 import auth from "./authService";
 
 class UserService {
-    getAllUser(data){
+    getAllUser(){
+        return http.get(`/user/`, {headers: auth()});
+    }
+
+    getUserPage(data){
         return http.get(`/user/?page=${data.page}&page_size=${data.page_size}`, {headers: auth()});
     }
 

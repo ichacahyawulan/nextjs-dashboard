@@ -4,8 +4,6 @@ import { AiOutlineMenu } from 'react-icons/ai'
 import { FaUserCircle } from 'react-icons/fa'
 import { IoIosArrowDown } from 'react-icons/io'
 import Sidebar from './sidebar';
-import LoginService from '../services/LoginService';
-import UserService from '../services/UserService';
 
 import { isLogin } from '../services/authService';
 
@@ -39,8 +37,8 @@ export default function Header() {
       <header className={styles.header}>
         <div className={styles.burger_logo}>
           {/* hamburger button can clicked on page that have max-width 1200px */}
-          <AiOutlineMenu size={30} color="black" className="burger"></AiOutlineMenu>
-          <button type="button" className="btn btn-light burger-btn" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample"><AiOutlineMenu size={30} color="black"></AiOutlineMenu></button>
+          <AiOutlineMenu size={30} color="black" className={styles.burger}></AiOutlineMenu>
+          <button type="button" className={`btn btn-light ${styles["burger-btn"]}`} data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample"><AiOutlineMenu size={30} color="black"></AiOutlineMenu></button>
           <p className={styles.logo}>LOGO</p>
         </div>
 
@@ -51,15 +49,15 @@ export default function Header() {
             <p className={styles.user_role}>{user == null ? "Administrator" : user.employee}</p>
           </div>
           <button type="button" className="btn btn-light" data-bs-toggle="dropdown" aria-expanded="false"><IoIosArrowDown size={30} color="#03050B"></IoIosArrowDown></button>
-          <div className="dropdown-menu">
-            <button type="button" className="btn btn-light btn-logout" onClick={submitLogout}>Logout</button>
+          <div className={`${styles["dropdown-menu"]} dropdown-menu`}>
+            <button type="button" className={`btn btn-light ${styles["btn-logout"]}`} onClick={submitLogout}>Logout</button>
           </div>
         </div>
       </header>
 
       {/* offcanvas for sidebar on mobile version */}
-      <div className="offcanvas offcanvas-start" tabIndex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
-        <div className="offcanvas-header">
+      <div className={`${styles.offcanvas} offcanvas offcanvas-start`} tabIndex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+        <div className={`${styles["offcanvas-header"]} offcanvas-header`}>
           <h5 className="offcanvas-title" id="offcanvasExampleLabel"></h5>
           <button type="button" className="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
@@ -67,33 +65,6 @@ export default function Header() {
           <Sidebar />
         </div>
       </div>
-
-      <style jsx>{`        
-        .offcanvas {
-          width: 290px;
-          background: #F6F6F9;
-        }
-        .offcanvas-header {
-          height: 15px;
-        }
-        .dropdown-menu {
-          padding: 0px;
-        }
-        .btn-logout {
-          width: 100%;
-        }
-        
-        @media only screen and (min-width: 1201px) { 
-          .burger-btn {
-            display: none;
-          }
-        }
-        @media only screen and (max-width: 1200px) { 
-          .burger {
-            display: none;
-          }
-        }
-      `}</style>
     </div>
   )
 }
