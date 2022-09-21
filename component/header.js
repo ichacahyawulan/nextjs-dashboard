@@ -1,5 +1,5 @@
 import {useEffect, useState} from 'react';
-import styles from '../styles/dashboard.module.css'
+import styles from '../styles/header.module.css'
 import { AiOutlineMenu } from 'react-icons/ai'
 import { FaUserCircle } from 'react-icons/fa'
 import { IoIosArrowDown } from 'react-icons/io'
@@ -56,7 +56,7 @@ export default function Header() {
           </div>
         </div>
       </header>
-      
+
       {/* offcanvas for sidebar on mobile version */}
       <div className="offcanvas offcanvas-start" tabIndex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
         <div className="offcanvas-header">

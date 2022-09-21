@@ -151,7 +151,7 @@ export default function UserTable() {
                 {item.is_active ? 
                   <span className="status-active">ACTIVE</span>
                 :
-                  <span className="status-nonactive">NON ACTIVE</span>
+                  <span className="status-inactive">INACTIVE</span>
                 }
               </td>
               <td className="action-button">
@@ -268,7 +268,7 @@ export default function UserTable() {
           color: rgb(25, 133, 100);
           padding: 5px;
         }
-        .status-nonactive {
+        .status-inactive {
           background: rgb(255, 0, 0, 0.26);
           border-radius: 5px;
           color: rgb(255, 0, 0);
