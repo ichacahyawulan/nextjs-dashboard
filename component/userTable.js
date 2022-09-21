@@ -22,16 +22,50 @@ export default function UserTableList() {
   const editUser = useSelector((state) => state.editUser.value)
   const updateTable = useSelector((state) => state.updateTable.value)
   const [dataUser, setDataUser] = useState([])
+  const [newDataUser, setNewDataUser] = useState([])
   const [userId, setUserId] = useState("")
   const [search, setSearch] = useState("")
   const [currentPage, setCurrentPage] = useState(1);
+
+  // create new data user with departement data
+  useEffect(() => {
+    const array = dataUser
+    let users = [];
+    let promises = [];
+    if (array.length !== 0) {
+      for (let i = 0; i < array.length; i++) {
+        promises.push(
+          UserService.getUser(array[i].id).then((res) => {
+            let data = {
+              id: array[i].id,
+              email: array[i].email,
+              employee: array[i].employee,
+              is_active: array[i].is_active,
+              departement: res.data.departement
+            }
+            users.push(data);
+          })
+        )
+      }
+    }
+    
+    Promise.all(promises).then(() => {
+      setNewDataUser(users)
+    });
+  }, [dataUser])
 
   // get data by table page
   const currentTableData = useMemo(() => {
     const firstPageIndex = (currentPage - 1) * PageSize;
     const lastPageIndex = firstPageIndex + PageSize;
-    return dataUser.slice(firstPageIndex, lastPageIndex);
-  }, [currentPage, dataUser]);
+
+    // return newDataUser with departement data
+    if (newDataUser.length !== 0) {
+      return newDataUser.slice(firstPageIndex, lastPageIndex);
+    } else {
+      return dataUser.slice(firstPageIndex, lastPageIndex);
+    }
+  }, [currentPage, dataUser, newDataUser]);
 
   // get data length
   const dataLength = useMemo(() => {
@@ -118,7 +152,7 @@ export default function UserTableList() {
         </div>
         <div className="user-control">
           <div className="input-group">
-            <input className="form-control border-end-0 border" type="search" id="example-search-input" onChange={(e) => setSearch(e.target.value)}/>
+            <input className="form-control border-end-0 border" type="search" id="search-input" placeholder="Search" onChange={(e) => setSearch(e.target.value)}/>
           </div>
           <button className="create-button" type="button" onClick={() => dispatch(showCreate())}>
             <BsPlusLg />
@@ -277,7 +311,7 @@ export default function UserTableList() {
         .pagination-bar {
           width: 100%;
           display: flex;
-          justify-content: end;
+          justify-content: flex-end;
         }  
 
         @media only screen and (max-width: 768px) {
