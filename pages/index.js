@@ -23,10 +23,13 @@ export default function Dashboard() {
   return (
     <div>
       <Header />
+
+      {/* this sidebar component will be hidden at mobile size */}
       <div className="sidebar">
         <Sidebar />
       </div>
-      
+
+      {/* change content based on active menu */}
       <div className="content">
         {selectedMenu === "dashboard" ? 
           <div className="dashboard-content">

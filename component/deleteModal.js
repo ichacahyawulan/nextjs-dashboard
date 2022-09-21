@@ -4,6 +4,8 @@ import { hide } from "../redux/deleteModalSlice"
 
 import UserService from "../services/UserService"
 
+
+// get props from userTable
 export default function DeleteModal(props) {
   const dispatch = useDispatch()
 

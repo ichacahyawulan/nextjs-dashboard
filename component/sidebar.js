@@ -2,7 +2,6 @@ import styles from '../styles/sidebar.module.css'
 import { AiOutlineDashboard, AiOutlineUsergroupAdd } from 'react-icons/ai'
 import { BiLineChart } from 'react-icons/bi'
 import { IoIosArrowForward, IoIosArrowDown } from 'react-icons/io'
-import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { setMenu } from '../redux/selectedMenu'
 
@@ -10,6 +9,7 @@ export default function Sidebar() {
   const dispath = useDispatch()
   const selectedMenu = useSelector((state) => state.selectedMenu.value)
 
+  // set button menu style
   const getDashboardStyle = () => {
     if (selectedMenu === "dashboard") return styles.active_menu;
     else return styles.btn_menu;
@@ -25,6 +25,7 @@ export default function Sidebar() {
     else return styles.btn_menu;
   };
 
+  // set active menu to redux store
   const handleDashboardClick = () => {
     dispath(setMenu("dashboard"))
   };

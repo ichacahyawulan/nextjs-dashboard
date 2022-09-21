@@ -4,6 +4,7 @@ import { hideEdit } from "../redux/editModalSlice"
 
 import UserService from "../services/UserService"
 
+// get props from userTable
 export default function EditUser(props) {
   const dispatch = useDispatch()
   const [email, setEmail] = useState("");
@@ -25,8 +26,6 @@ export default function EditUser(props) {
         is_active: isActive,
         departement: departement
       }
-
-      // console.log(user)
 
       UserService.editUser(props.userId, user)
         .then(() => {

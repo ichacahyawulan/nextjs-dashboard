@@ -6,6 +6,8 @@ import UserService from "../services/UserService"
 
 export default function CreateUser() {
   const dispatch = useDispatch()
+
+  // state for each form input
   const [email, setEmail] = useState("");
   const [employee, setEmployee] = useState("");
   const [pass, setPass] = useState("");
@@ -13,6 +15,7 @@ export default function CreateUser() {
   const [isActive, setIsActive] = useState(false);
   const [departement, setDepartement] = useState("");
 
+  // function to create user when button create clicked
   function createUser(e){
     e.preventDefault();
 
@@ -26,23 +29,13 @@ export default function CreateUser() {
         departement: departement
       }
 
-      // console.log(user)
-
       UserService.createUser(user)
         .then(() => {
-            dispatch(hideCreate())       
+            dispatch(hideCreate()) // hide modal for create user       
         })
         .catch(() => {});
     } catch (error) {
         console.log(error.message)
-    }
-  }
-
-  function setActive(value) {
-    if (value) {
-      setIsActive(true)
-    } else {
-      setIsActive(false)
     }
   }
 
@@ -66,7 +59,7 @@ export default function CreateUser() {
           <input className="form-control" id="inputPasswordConf" placeholder="Enter password configuration" type="password" required onChange={(e) => setPassConf(e.target.value)} />
         </div>
         <div className="form-check">
-          <input className="form-check-input" type="checkbox" id="inputPasswordConf" onChange={(e) => setActive(e.target.checked)}/>
+          <input className="form-check-input" type="checkbox" id="inputPasswordConf" onChange={(e) => setIsActive(e.target.checked)}/>
           <label className="form-check-label" htmlFor="inputPasswordConf">
             Active
           </label>

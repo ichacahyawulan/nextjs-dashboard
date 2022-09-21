@@ -80,10 +80,6 @@ export default function SalesTable() {
           color: rgba(122, 182, 253);
           padding: 5px;
         }
-
-        @media only screen and (max-width: 768px) {
-          
-        }
       `}</style>
     </div>
   )

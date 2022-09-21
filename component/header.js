@@ -15,6 +15,7 @@ export default function Header() {
   const [user, setUser] = useState({})
   const Router = useRouter();
 
+  // get user data for header detail account
   useEffect(() => {
     let auth = isLogin()
     if (auth) {
@@ -22,7 +23,8 @@ export default function Header() {
       setUser(userData)
     }
   }, [])
-
+  
+  // remove token from local storage and direct route to login
   function submitLogout(){
     try {
       localStorage.removeItem("user");
@@ -36,6 +38,7 @@ export default function Header() {
     <div className={styles.container}>
       <header className={styles.header}>
         <div className={styles.burger_logo}>
+          {/* hamburger button can clicked on page that have max-width 1200px */}
           <AiOutlineMenu size={30} color="black" className="burger"></AiOutlineMenu>
           <button type="button" className="btn btn-light burger-btn" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample"><AiOutlineMenu size={30} color="black"></AiOutlineMenu></button>
           <p className={styles.logo}>LOGO</p>
@@ -53,7 +56,8 @@ export default function Header() {
           </div>
         </div>
       </header>
-
+      
+      {/* offcanvas for sidebar on mobile version */}
       <div className="offcanvas offcanvas-start" tabIndex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
         <div className="offcanvas-header">
           <h5 className="offcanvas-title" id="offcanvasExampleLabel"></h5>
