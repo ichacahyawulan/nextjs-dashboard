@@ -1,8 +1,6 @@
-import Head from 'next/head'
-import Image from 'next/image'
 import styles from '../styles/login.module.css'
-import Script from 'next/script'
 import { useState, useEffect } from 'react'
+import LoginService from '../services/LoginService';
 
 export default function Login() {
   const [userEmail, setEmail] = useState("");
@@ -30,6 +28,27 @@ export default function Login() {
         email: userEmail,
         password: userPass
       }
+
+      LoginService.login(user).then((res) => {
+      switch (res.status) {
+        case 200:
+          localStorage.removeItem("user");
+          localStorage.setItem("user", JSON.stringify(res.data));
+          navigate('/v1');
+          break;
+        case 400:
+          alert('Bad request.')
+          break;
+        case 422:
+          alert('Validation error.')
+          break;
+        case 500:
+          alert('Something went wrong.')
+          break;
+        default:
+          break
+      }                
+    })
 
     } catch (error) {
       console.log(error.message)
