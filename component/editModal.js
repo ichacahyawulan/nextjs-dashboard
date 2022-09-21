@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux"
 import { hideEdit } from "../redux/editModalSlice"
 
 import UserService from "../services/UserService"
 
-export default function EditUser() {
+export default function EditUser(props) {
   const dispatch = useDispatch()
   const [email, setEmail] = useState("");
   const [employee, setEmployee] = useState("");
@@ -28,9 +28,9 @@ export default function EditUser() {
 
       // console.log(user)
 
-      UserService.editUser(id, user)
+      UserService.editUser(props.userId, user)
         .then(() => {
-            window.location.reload();            
+          dispatch(hideEdit())          
         })
         .catch(() => {});
     } catch (error) {
@@ -78,12 +78,12 @@ export default function EditUser() {
       </div>
 
       <div className="foot">
-          <button className="btn btn-secondary" onClick={() => dispatch(hideEdit())}>
-              Cancel
-          </button>
-          <button className="btn btn-primary" onClick={(e) => editUser(e)}>
-              Save Task
-          </button>
+        <button className="btn btn-secondary" onClick={() => dispatch(hideEdit())}>
+          Cancel
+        </button>
+        <button className="btn btn-primary" onClick={(e) => editUser(e)}>
+          Edit
+        </button>
       </div>
 
       <style jsx>{`        

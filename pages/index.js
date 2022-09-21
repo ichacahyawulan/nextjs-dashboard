@@ -5,9 +5,20 @@ import Doughnat from '../component/doughnut'
 import SalesTable from "../component/salesTable";
 import UserTable from "../component/userTable";
 import { useSelector } from "react-redux";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
+import { isLogin } from "../services/authService";
 
 export default function Dashboard() {
   const selectedMenu = useSelector((state) => state.selectedMenu.value)
+  const router = useRouter()
+
+  useEffect(() => {
+    let auth = isLogin()
+    if (!auth) {
+      router.push("/login")
+    }
+  }, [])
 
   return (
     <div>

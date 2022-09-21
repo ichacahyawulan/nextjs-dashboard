@@ -1,4 +1,5 @@
 import http from "./http-common";
+import auth from "./authService";
 
 class LoginService {
     login(data) {
@@ -6,15 +7,15 @@ class LoginService {
     }
 
     logout() {
-        return http.post("/auth/logout");
+        return http.post("/auth/logout", {headers: auth()});
     }
 
     profile() {
-        return http.get("/auth/me");
+        return http.get("/auth/me", {headers: auth()});
     }
 
     token() {
-        return http.post("/auth/token");
+        return http.post("/auth/token", {headers: auth()});
     }
 }
 

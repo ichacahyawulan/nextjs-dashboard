@@ -10,20 +10,6 @@ export default function Sidebar() {
   const dispath = useDispatch()
   const selectedMenu = useSelector((state) => state.selectedMenu.value)
 
-  // useEffect(() => {
-  //   let btn = document.getElementsByClassName(`${styles.btn_menu}`);
-
-  //   // console.log(btn)
-  //   for (let i = 0; i < btn.length; i++) {
-  //     btn[i].addEventListener("click", function() {
-  //       var current = document.getElementsByClassName(`${styles.active_menu}`);
-  //       console.log(current[0].className)
-  //       current[0].className = current[0].className.replace(` ${styles.active_menu}`, "");
-  //       // this.className += `${styles.active_menu}`;
-  //     });
-  //   }
-  // })
-
   const getDashboardStyle = () => {
     if (selectedMenu === "dashboard") return styles.active_menu;
     else return styles.btn_menu;

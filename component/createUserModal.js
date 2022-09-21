@@ -10,7 +10,7 @@ export default function CreateUser() {
   const [employee, setEmployee] = useState("");
   const [pass, setPass] = useState("");
   const [passConf, setPassConf] = useState("");
-  const [isActive, setIsActive] = useState(true);
+  const [isActive, setIsActive] = useState(false);
   const [departement, setDepartement] = useState("");
 
   function createUser(e){
@@ -28,18 +28,18 @@ export default function CreateUser() {
 
       // console.log(user)
 
-      // UserService.createUser(user)
-      //   .then(() => {
-      //       window.location.reload();            
-      //   })
-      //   .catch(() => {});
+      UserService.createUser(user)
+        .then(() => {
+            dispatch(hideCreate())       
+        })
+        .catch(() => {});
     } catch (error) {
         console.log(error.message)
     }
   }
 
   function setActive(value) {
-    if (value === "on") {
+    if (value) {
       setIsActive(true)
     } else {
       setIsActive(false)
@@ -66,7 +66,7 @@ export default function CreateUser() {
           <input className="form-control" id="inputPasswordConf" placeholder="Enter password configuration" type="password" required onChange={(e) => setPassConf(e.target.value)} />
         </div>
         <div className="form-check">
-          <input className="form-check-input" type="checkbox" id="inputPasswordConf" onChange={(e) => setActive(e.target.value)}/>
+          <input className="form-check-input" type="checkbox" id="inputPasswordConf" onChange={(e) => setActive(e.target.checked)}/>
           <label className="form-check-label" htmlFor="inputPasswordConf">
             Active
           </label>
@@ -78,12 +78,12 @@ export default function CreateUser() {
       </div>
 
       <div className="foot">
-          <button className="btn btn-secondary" onClick={() => dispatch(hideCreate())}>
-              Cancel
-          </button>
-          <button className="btn btn-primary" onClick={(e) => createUser(e)}>
-              Save Task
-          </button>
+        <button className="btn btn-secondary" onClick={() => dispatch(hideCreate())}>
+          Cancel
+        </button>
+        <button className="btn btn-primary" onClick={(e) => createUser(e)}>
+          Create
+        </button>
       </div>
 
       <style jsx>{`        

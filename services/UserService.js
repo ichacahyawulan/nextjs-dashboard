@@ -6,8 +6,12 @@ class UserService {
         return http.get(`/user/?page=${data.page}&page_size=${data.page_size}`, {headers: auth()});
     }
 
+    getUserSearch(data){
+        return http.get(`/user/?search=${data}`, {headers: auth()});
+    }
+
     createUser(data){
-        return http.post(`/user`, data, {headers: auth()});
+        return http.post(`/user/`, data, {headers: auth()});
     }
 
     getUser(id){

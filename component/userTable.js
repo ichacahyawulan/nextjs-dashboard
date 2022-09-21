@@ -8,11 +8,106 @@ import DeleteModal from "./deleteModal";
 import CreateUser from './createUserModal'
 import EditUser from './editModal'
 
+import UserService from '../services/UserService'
+import { useEffect, useState } from 'react'
+
 export default function UserTable() {
   const dispatch = useDispatch()
   const deleteUser = useSelector((state) => state.deleteUser.value)
   const createUser = useSelector((state) => state.createUser.value)
   const editUser = useSelector((state) => state.editUser.value)
+  const [dataUser, setDataUser] = useState([])
+  const [userId, setUserId] = useState("")
+  const [search, setSearch] = useState("")
+
+  useEffect(() => {
+    function getUserData(){
+      try {
+        const data_page = {
+          page: 1,
+          page_size: 10
+        }
+        UserService.getAllUser(data_page).then((res) => {
+          switch (res.status) {
+            case 200:
+              setDataUser(res.data.results)
+              break;
+            default:
+              break
+          } 
+        })
+      } catch (error) {
+        console.log(error.message)
+      }
+    }
+
+    getUserData()
+  })
+
+  useEffect(() => {
+    try {
+      UserService.getUserSearch(search).then((res) => {
+        switch (res.status) {
+          case 200:
+            setDataUser(res.data.results)
+            break;
+          default:
+            break
+        } 
+      })
+    } catch (error) {
+      console.log(error.message)
+    }
+  }, [search])
+
+
+  function showDeleteModal(id) {
+    dispatch(show())
+    setUserId(id)
+  }
+
+  function showEditModal(id) {
+    dispatch(showEdit())
+    setUserId(id)
+  }
+
+  const data = [
+    {
+      "id": "d4ac1ad5-31cc-4563-abfe-f44e9e69effd",
+      "employee": "admin",
+      "email": "michelle@gmail.com",
+      "is_active": true,
+      "departement": "Marketing"
+    },
+    {
+      "id": "1",
+      "employee": "Jona Michelle 1",
+      "email": "michelle@gmail.com",
+      "is_active": false,
+      "departement": "Marketing"
+    },
+    {
+      "id": "2",
+      "employee": "Jona Michelle 2",
+      "email": "michelle@gmail.com",
+      "is_active": true,
+      "departement": "Marketing"
+    },
+    {
+      "id": "3",
+      "employee": "Jona Michelle 3",
+      "email": "michelle@gmail.com",
+      "is_active": true,
+      "departement": "Marketing"
+    },
+    {
+      "id": "4",
+      "employee": "Jona Michelle 4",
+      "email": "michelle@gmail.com",
+      "is_active": true,
+      "departement": "Marketing"
+    }
+  ]
 
   return (
     <div className="user-table">
@@ -23,7 +118,7 @@ export default function UserTable() {
         </div>
         <div className="user-control">
           <div className="input-group">
-            <input className="form-control border-end-0 border" type="search" id="example-search-input" />
+            <input className="form-control border-end-0 border" type="search" id="example-search-input" onChange={(e) => setSearch(e.target.value)}/>
             <span className="input-group-append">
               <button className="btn btn-outline-secondary bg-white border-start-0 border-bottom-0 border ms-n5" type="button">
                 <BsSearch />
@@ -47,76 +142,28 @@ export default function UserTable() {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>Jona Michelle</td>
-            <td className="d-none d-md-table-cell">michelle@gmail.com</td>
-            <td className="d-none d-md-table-cell">Marketing</td>
-            <td className="d-none d-md-table-cell"><span className="status">ACTIVE</span></td>
-            <td className="action-button">
-              <button className="btn btn-dark" type="button" onClick={() => dispatch(showEdit())}>
-                <AiOutlineEdit size={25}/>
-              </button>
-              <button className="btn btn-danger" type="button" onClick={() => dispatch(show())}>
-                <AiOutlineDelete size={25}/>
-              </button>
-            </td>
-          </tr>
-          <tr>
-            <td>Jona Michelle</td>
-            <td className="d-none d-md-table-cell">michelle@gmail.com</td>
-            <td className="d-none d-md-table-cell">Information Technology</td>
-            <td className="d-none d-lg-table-cell"><span className="status">ACTIVE</span></td>
-            <td className="action-button">
-              <button className="btn btn-dark" type="button" onClick={() => dispatch(showEdit())}>
-                <AiOutlineEdit size={25}/>
-              </button>
-              <button className="btn btn-danger" type="button" onClick={() => dispatch(show())}>
-                <AiOutlineDelete size={25}/>
-              </button>
-            </td>
-          </tr>
-          <tr>
-            <td>Jona Michelle</td>
-            <td className="d-none d-md-table-cell">michelle@gmail.com</td>
-            <td className="d-none d-md-table-cell">Marketing</td>
-            <td className="d-none d-md-table-cell"><span className="status">ACTIVE</span></td>
-            <td className="action-button">
-              <button className="btn btn-dark" type="button" onClick={() => dispatch(showEdit())}>
-                <AiOutlineEdit size={25}/>
-              </button>
-              <button className="btn btn-danger" type="button" onClick={() => dispatch(show())}>
-                <AiOutlineDelete size={25}/>
-              </button>
-            </td>
-          </tr>
-          <tr>
-            <td>Jona Michelle</td>
-            <td className="d-none d-md-table-cell">michelle@gmail.com</td>
-            <td className="d-none d-md-table-cell">Marketing</td>
-            <td className="d-none d-md-table-cell"><span className="status">ACTIVE</span></td>
-            <td className="action-button">
-              <button className="btn btn-dark" type="button" onClick={() => dispatch(showEdit())}>
-                <AiOutlineEdit size={25}/>
-              </button>
-              <button className="btn btn-danger" type="button" onClick={() => dispatch(show())}>
-                <AiOutlineDelete size={25}/>
-              </button>
-            </td>
-          </tr>
-          <tr>
-            <td>Jona Michelle</td>
-            <td className="d-none d-md-table-cell">michelle@gmail.com</td>
-            <td className="d-none d-md-table-cell">Information Technology</td>
-            <td className="d-none d-md-table-cell"><span className="status">ACTIVE</span></td>
-            <td className="action-button">
-              <button className="btn btn-dark" type="button" onClick={() => dispatch(showEdit())}>
-                <AiOutlineEdit size={25}/>
-              </button>
-              <button className="btn btn-danger" type="button" onClick={() => dispatch(show())}>
-                <AiOutlineDelete size={25}/>
-              </button>
-            </td>
-          </tr>
+          {dataUser.map((item, index) => (
+            <tr key={index}>
+              <td>{item.employee}</td>
+              <td className="d-none d-md-table-cell">{item.email}</td>
+              <td className="d-none d-md-table-cell">{item.departement}</td>
+              <td className="d-none d-md-table-cell">
+                {item.is_active ? 
+                  <span className="status-active">ACTIVE</span>
+                :
+                  <span className="status-nonactive">NON ACTIVE</span>
+                }
+              </td>
+              <td className="action-button">
+                <button className="btn btn-dark" type="button" onClick={() => showEditModal(item.id)}>
+                  <AiOutlineEdit size={25}/>
+                </button>
+                <button className="btn btn-danger" type="button" onClick={() => showDeleteModal(item.id)}>
+                  <AiOutlineDelete size={25}/>
+                </button>
+              </td>
+            </tr>
+          ))}
         </tbody>
       </table>
 
@@ -142,7 +189,7 @@ export default function UserTable() {
       </div>
 
       {deleteUser ? 
-        <DeleteModal />
+        <DeleteModal userId={userId}/>
       :
         null
       }
@@ -154,7 +201,7 @@ export default function UserTable() {
       }
 
       {editUser ? 
-        <EditUser />
+        <EditUser userId={userId}/>
         :
         null
       }
@@ -215,10 +262,16 @@ export default function UserTable() {
         th, td {
           vertical-align: middle;
         }
-        .status {
+        .status-active {
           background: rgba(153, 239, 203, 0.26);
           border-radius: 5px;
-          color: rgba(153, 239, 203);
+          color: rgb(25, 133, 100);
+          padding: 5px;
+        }
+        .status-nonactive {
+          background: rgb(255, 0, 0, 0.26);
+          border-radius: 5px;
+          color: rgb(255, 0, 0);
           padding: 5px;
         }
         .action-button {

@@ -68,7 +68,7 @@
 }
 
 .user_name {
-  width: 89px;
+  width: auto;
   height: 21px;
   margin: 0px;
 
@@ -86,7 +86,7 @@
 }
 
 .user_role {
-  width: 90px;
+  width: auto;
   height: 17px;
   margin: 0px;
 

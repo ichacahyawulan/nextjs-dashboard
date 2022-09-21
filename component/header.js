@@ -5,22 +5,28 @@ import { FaUserCircle } from 'react-icons/fa'
 import { IoIosArrowDown } from 'react-icons/io'
 import Sidebar from './sidebar';
 import LoginService from '../services/LoginService';
+import UserService from '../services/UserService';
+
+import { isLogin } from '../services/authService';
+
+import { useRouter } from "next/router";
 
 export default function Header() {
+  const [user, setUser] = useState({})
+  const Router = useRouter();
+
+  useEffect(() => {
+    let auth = isLogin()
+    if (auth) {
+      let userData = JSON.parse(localStorage.getItem('user'));
+      setUser(userData)
+    }
+  }, [])
 
   function submitLogout(){
     try {
-      LoginService.logout().then((res) => {
-        switch (res.status) {
-          case 200:
-            localStorage.removeItem("user");
-            navigate('/login');
-            break;
-          default:
-            break
-        }                
-      })
-
+      localStorage.removeItem("user");
+      Router.replace("/login");
     } catch (error) {
       console.log(error.message)
     }
@@ -38,8 +44,8 @@ export default function Header() {
         <div className={styles.account}>
           <FaUserCircle size={30} color="black"></FaUserCircle>
           <div className={styles.account_detail}>
-            <p className={styles.user_name}>Rian Andra</p>
-            <p className={styles.user_role}>Administrator</p>
+            <p className={styles.user_name}>{user == null ? "Rian Andra" : user.email}</p>
+            <p className={styles.user_role}>{user == null ? "Administrator" : user.employee}</p>
           </div>
           <button type="button" className="btn btn-light" data-bs-toggle="dropdown" aria-expanded="false"><IoIosArrowDown size={30} color="#03050B"></IoIosArrowDown></button>
           <div className="dropdown-menu">
@@ -73,12 +79,12 @@ export default function Header() {
           width: 100%;
         }
         
-        @media only screen and (min-width: 992px) { 
+        @media only screen and (min-width: 1201px) { 
           .burger-btn {
             display: none;
           }
         }
-        @media only screen and (max-width: 992px) { 
+        @media only screen and (max-width: 1200px) { 
           .burger {
             display: none;
           }

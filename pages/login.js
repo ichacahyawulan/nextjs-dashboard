@@ -1,45 +1,62 @@
 import styles from '../styles/login.module.css'
 import { useState, useEffect } from 'react'
 import LoginService from '../services/LoginService';
+import { useRouter } from "next/router";
 
 export default function Login() {
   const [userEmail, setEmail] = useState("");
   const [userPass, setPass] = useState("");
+  const Router = useRouter()
 
-  useEffect(() => {
-    let forms = document.getElementsByClassName('needs-validation');
+  // useEffect(() => {
+  //   let forms = document.getElementsByClassName('needs-validation');
     
-    // Loop over them and prevent submission
-    Array.prototype.filter.call(forms, function(form) {
-        form.addEventListener('submit', function(event) {
-            if (form.checkValidity() === false) {
-                event.preventDefault();
-                event.stopPropagation();
-            }
-            form.classList.add('was-validated');
-        }, false);
-    });
-  }, [])
+  //   // Loop over them and prevent submission
+  //   Array.prototype.filter.call(forms, function(form) {
+  //       form.addEventListener('submit', function(event) {
+  //           if (form.checkValidity() === false) {
+  //               event.preventDefault();
+  //               event.stopPropagation();
+  //           }
+  //           form.classList.add('was-validated');
+  //       }, false);
+  //   });
+  // }, [])
 
-  function submitLogin(){
+  function submitLogin(event){
     try {
       const user = {
         email: userEmail,
         password: userPass
       }
 
-      LoginService.login(user).then((res) => {
-        switch (res.status) {
-          case 200:
-            localStorage.removeItem("user");
-            localStorage.setItem("user", JSON.stringify(res.data));
-            navigate('/v1');
-            break;
-          default:
-            break
-        }                
-      })
+      let forms = document.getElementsByClassName('needs-validation');
+    
+    // Loop over them and prevent submission
+      Array.prototype.filter.call(forms, function(form) {
+        if (form.checkValidity() === false) {
+            event.preventDefault();
+            event.stopPropagation();
+        }
+        form.classList.add('was-validated');
 
+        LoginService.login(user).then((res) => {
+          switch (res.status) {
+            case 200:
+              localStorage.removeItem("user");
+              let user = {
+                "email": res.data.email,
+                "employee": res.data.employee,
+                "token": res.data.token
+              }
+              localStorage.setItem("user", JSON.stringify(user));
+              Router.push("/");
+              break;
+            default:
+              break
+          }                
+        })
+      });
     } catch (error) {
       console.log(error.message)
     }
@@ -70,7 +87,7 @@ export default function Login() {
               <input type="password" className={styles.form_control} id="inputPassword" placeholder="Enter password" required onChange={(e) => setPass(e.target.value)} />
               <div className="invalid-feedback">This field is required.</div>
             </div>
-            <button type="submit" className={`${styles.button_input}`} onClick={submitLogin}>Login</button>
+            <button type="button" className={`${styles.button_input}`} onClick={(e) => submitLogin(e)}>Login</button>
           </form>
         </div>
       </main>

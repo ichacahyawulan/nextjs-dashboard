@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch } from "react-redux"
 import { hide } from "../redux/deleteModalSlice"
 
@@ -11,9 +11,9 @@ export default function DeleteModal(props) {
     e.preventDefault();
 
     try {
-      UserService.deleteUser(props.id)
+      UserService.deleteUser(props.userId)
         .then(() => {
-          window.location.reload();            
+          dispatch(hide())           
         })
         .catch(() => {});
     } catch (error) {
